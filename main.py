@@ -952,6 +952,11 @@ class PowerMeterBridge:
             logger.info("Serial connection closed.")
             
         if self.owon_conn and self.owon_conn.is_open:
+            try:
+                self.owon_conn.write(b'SYST:LOC\n')
+                time.sleep(0.1)
+            except Exception as e:
+                logger.debug(f"Failed to send SYST:LOC to OWON: {e}")
             self.owon_conn.close()
             logger.info("OWON connection closed.")
         
