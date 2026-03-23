@@ -43,7 +43,7 @@ python main.py [OPTIONS]
 | `--no-owon` | Disable reading temperature from the OWON XDM2041 multimeter. (OWON connectivity is enabled by default) |
 | `--no-auto-detect`| Disable automatic detection of UTE and OWON serial ports. If set, explicit environment variable ports will be used. |
 | `--power-only` | Only poll active power on the UTE meter (disables pf, current, voltage, frequency) |
-| `--display` | Show a live curses-based front panel display in the terminal |
+| `--nodisplay` | Disable live curses-based front panel display in the terminal |
 
 ### Display Mode Keyboard Controls
 
