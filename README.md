@@ -42,6 +42,16 @@ python main.py [OPTIONS]
 |------|-------------|
 | `--no-owon` | Disable reading temperature from the OWON XDM2041 multimeter. (OWON connectivity is enabled by default) |
 | `--no-auto-detect`| Disable automatic detection of UTE and OWON serial ports. If set, explicit environment variable ports will be used. |
+| `--power-only` | Only poll active power on the UTE meter (disables pf, current, voltage, frequency) |
+| `--display` | Show a live curses-based front panel display in the terminal |
+
+### Display Mode Keyboard Controls
+
+When running with the `--display` flag, the bottom status bar will show the active serial ports and the real-time sampling rates (measurements per second). You can dynamically adjust the reading delays using the following keys:
+
+- **`w`** / **`s`**: Increase / Decrease UTE9811+ sampling rate.
+- **`e`** / **`d`**: Increase / Decrease OWON XDM2041 sampling rate.
+- **`q`**: Quit the application.
 
 ## Configuration
 
