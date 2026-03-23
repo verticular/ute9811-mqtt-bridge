@@ -736,7 +736,10 @@ class PowerMeterBridge:
             response = self.serial_conn.readline().decode('utf-8').strip()
             
             # Extract float
-            return float(response)
+            val = float(response)
+            if val != val:  # Check for NaN
+                return None
+            return val
         except Exception:
             return None
 
@@ -758,7 +761,11 @@ class PowerMeterBridge:
                     # Clean up string
                     clean_p = p.strip()
                     if clean_p:
-                        results.append(float(clean_p))
+                        val = float(clean_p)
+                        if val != val:  # Check for NaN
+                            results.append(0.0)
+                        else:
+                            results.append(val)
                 except ValueError:
                     continue
             return results
@@ -838,16 +845,17 @@ class PowerMeterBridge:
                 response = self.owon_conn.readline().decode('utf-8').strip()
                 try:
                     val = float(response)
-                    with self.state_lock:
-                        self.owon_state['temperature'] = val
-                        
-                    now = time.time()
-                    self.owon_timestamps.append(now)
-                    if len(self.owon_timestamps) > 10:
-                        self.owon_timestamps.pop(0)
-                    if len(self.owon_timestamps) >= 2:
-                        dt = self.owon_timestamps[-1] - self.owon_timestamps[0]
-                        self.owon_rate = (len(self.owon_timestamps) - 1) / dt if dt > 0 else 0.0
+                    if val == val:  # Check that it's not NaN
+                        with self.state_lock:
+                            self.owon_state['temperature'] = val
+                            
+                        now = time.time()
+                        self.owon_timestamps.append(now)
+                        if len(self.owon_timestamps) > 10:
+                            self.owon_timestamps.pop(0)
+                        if len(self.owon_timestamps) >= 2:
+                            dt = self.owon_timestamps[-1] - self.owon_timestamps[0]
+                            self.owon_rate = (len(self.owon_timestamps) - 1) / dt if dt > 0 else 0.0
                 except ValueError:
                     pass # Ignore unparseable values
             except Exception as e:
