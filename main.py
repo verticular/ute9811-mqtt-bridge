@@ -965,7 +965,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description="UTE9811+ Power Meter and OWON XDM2041 MQTT Bridge")
-    parser.add_argument("--no-owon", dest="owon", action="store_true", help="Disable OWON XDM2041 multimeter reading")
+    parser.add_argument("--owon", dest="owon", action="store_true", help="Enable OWON XDM2041 multimeter reading")
     parser.add_argument("--no-auto-detect", dest="auto_detect", action="store_false", help="Disable automatic detection of UTE and OWON serial ports (/dev/ttyUSB0, /dev/ttyUSB1)")
     parser.add_argument("--power-only", dest="poll_extra", action="store_false", help="Only poll active power on the UTE meter (disables pf, current, voltage, frequency)")
     parser.add_argument("--nodisplay", action="store_false", help="Show a live curses-based front panel display in the terminal")
